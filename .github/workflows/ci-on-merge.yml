@@ -25,11 +25,9 @@ jobs:
           pip install -r requirements.txt
           pip install pytest ruff
 
-      - name: Set PYTHONPATH
+      - name: Set PYTHONPATH globally
         run: |
-          echo "Setting PYTHONPATH to $(pwd)/src"
-          export PYTHONPATH=$(pwd)/src
-          echo "PYTHONPATH set to $PYTHONPATH"
+          echo "PYTHONPATH=$(pwd)/src" >> $GITHUB_ENV
         shell: bash
 
       - name: Debugging - Check PYTHONPATH and sys.path
@@ -40,7 +38,6 @@ jobs:
 
       - name: Run pytest with PYTHONPATH set
         run: |
-          export PYTHONPATH=$(pwd)/src
           pytest test/unit --tb=short --maxfail=1 -v
 
       - name: Run ruff
