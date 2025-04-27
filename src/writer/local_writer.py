@@ -22,5 +22,5 @@ class LocalWriter(BaseWriter):
             raise ValueError(
                 f"Unsupported file type: {self.connection.params.file_type}"
             )
-        print(df.count())
-        return df.count()
+
+        return df.shape[0]
