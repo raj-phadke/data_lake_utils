@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+pandas = "*"
 
 [dev-packages]
 annotated-types = "==0.7.0"
