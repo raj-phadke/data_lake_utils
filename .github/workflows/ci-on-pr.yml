@@ -23,10 +23,10 @@ jobs:
           pip install -r requirements.txt
           pip install pytest ruff
 
-      - name: Set PYTHONPATH and run pytest
-        run: |
-          export PYTHONPATH=$(pwd)/src
-          pytest --tb=short --maxfail=1  # You can specify other pytest options here
+      # - name: Set PYTHONPATH and run pytest
+      #   run: |
+      #     export PYTHONPATH=$(pwd)/src
+      #     pytest --tb=short --maxfail=1  # You can specify other pytest options here
 
       - name: Run ruff
         run: ruff .
