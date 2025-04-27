@@ -25,15 +25,16 @@ jobs:
           pip install -r requirements.txt
           pip install pytest ruff
 
-      - name: Debugging - List directory contents
+      - name: Set PYTHONPATH
         run: |
-          echo "Current working directory: $(pwd)"
-          echo "Listing contents of the working directory:"
-          ls -la
+          echo "Setting PYTHONPATH to $(pwd)/src"
+          export PYTHONPATH=$(pwd)/src
+          echo "PYTHONPATH set to $PYTHONPATH"
+        shell: bash
 
       - name: Debugging - Check PYTHONPATH and sys.path
         run: |
-          export PYTHONPATH=$(pwd)/src
+          echo "Current PYTHONPATH: $PYTHONPATH"
           python -c "import sys; print(sys.path)"
           python -c "from src.connection.local_connection import LocalConnection; print('Import successful')"
 
