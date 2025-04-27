@@ -42,8 +42,10 @@ jobs:
 
       - name: Run pytest with PYTHONPATH set
         run: |
-          python -c "import sys; print(sys.path)"
-          pytest test/unit --tb=short --maxfail=1 -v
+          # Set PYTHONPATH just before running pytest
+          export PYTHONPATH=$(pwd)/src
+          echo "PYTHONPATH set to: $PYTHONPATH"
+          pytest --setup-show test/unit --tb=short --maxfail=1 -v
 
       - name: Run ruff
         run: ruff .
