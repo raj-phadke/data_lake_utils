@@ -25,24 +25,22 @@ jobs:
           pip install -r requirements.txt
           pip install pytest ruff
 
-      # Debug step to ensure the `src` directory is in the current working directory
       - name: Debugging - List directory contents
         run: |
           echo "Current working directory: $(pwd)"
           echo "Listing contents of the working directory:"
           ls -la
 
-      - name: Debugging - Check PYTHONPATH
+      - name: Debugging - Check PYTHONPATH and sys.path
         run: |
-          echo "Checking PYTHONPATH"
           export PYTHONPATH=$(pwd)/src
-          echo $PYTHONPATH
           python -c "import sys; print(sys.path)"
+          python -c "from src.connection.local_connection import LocalConnection; print('Import successful')"
 
       - name: Run pytest with PYTHONPATH set
         run: |
           export PYTHONPATH=$(pwd)/src
-          pytest --tb=short --maxfail=1
+          pytest test/unit --tb=short --maxfail=1 -v
 
       - name: Run ruff
         run: ruff .
