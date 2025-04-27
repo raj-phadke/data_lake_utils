@@ -48,4 +48,4 @@ jobs:
       #     pytest --setup-show test/unit --tb=short --maxfail=1 -v
 
       - name: Run ruff
-        run: ruff .
+        run: ruff check

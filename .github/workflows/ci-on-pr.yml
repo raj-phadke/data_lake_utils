@@ -29,4 +29,4 @@ jobs:
       #     pytest --tb=short --maxfail=1  # You can specify other pytest options here
 
       - name: Run ruff
-        run: ruff .
+        run: ruff check
