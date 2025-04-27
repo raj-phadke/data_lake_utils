@@ -14,9 +14,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set PYTHONPATH
-        run: echo "PYTHONPATH=$(pwd)/src" >> $GITHUB_ENV
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -28,8 +25,10 @@ jobs:
           pip install -r requirements.txt
           pip install pytest ruff
 
-      - name: Run pytest
-        run: pytest
+      - name: Set PYTHONPATH and run pytest
+        run: |
+          export PYTHONPATH=$(pwd)/src
+          pytest
 
       - name: Run ruff
         run: ruff .
