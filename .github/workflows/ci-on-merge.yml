@@ -1,0 +1,51 @@
+name: CI - Post Merge
+
+on:
+  push:
+    branches:
+      - main
+      - development
+
+jobs:
+  post-merge-checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest ruff
+
+      - name: Set PYTHONPATH globally
+        run: |
+          echo "PYTHONPATH=$(pwd)/src" >> $GITHUB_ENV
+        shell: bash
+
+      # - name: Debugging - Check directory structure
+      #   run: |
+      #     ls -R /home/runner/work/data_lake_utils/data_lake_utils/src
+
+      # - name: Debugging - Confirm PYTHONPATH and sys.path
+      #   run: |
+      #     echo "Current PYTHONPATH: $PYTHONPATH"
+      #     python -c "import sys; print(sys.path)"
+      #     python -c "from src.configs.connection_configs import LocalConnectionParams; print('Import successful')"
+
+      # - name: Run pytest with PYTHONPATH set
+      #   run: |
+      #     # Set PYTHONPATH just before running pytest
+      #     export PYTHONPATH=$(pwd)/src
+      #     echo "PYTHONPATH set to: $PYTHONPATH"
+      #     pytest --setup-show test/unit --tb=short --maxfail=1 -v
+
+      - name: Run ruff
+        run: ruff check
