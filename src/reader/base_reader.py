@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 
-import pandas as pd
 
 from src.connection.base_connection import BaseConnection
+from src.configs.dataframe_configs import dataframes
 
 
 class BaseReader(ABC):
@@ -18,8 +18,8 @@ class BaseReader(ABC):
         self.connection = connection
 
     @abstractmethod
-    def read(self) -> pd.DataFrame:
+    def read(self) -> dataframes:
         """
-        Abstract method to read data from a source and return a PySpark DataFrame.
+        Abstract method to read data from a source and return a DataFrame.
         """
         pass

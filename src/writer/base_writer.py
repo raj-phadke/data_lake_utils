@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 
-import pandas as pd
 
 from src.connection.base_connection import BaseConnection
+from src.configs.dataframe_configs import dataframes
 
 
 class BaseWriter(ABC):
@@ -18,8 +18,8 @@ class BaseWriter(ABC):
         self.connection = connection
 
     @abstractmethod
-    def write(self, df: pd.DataFrame) -> int:
+    def write(self, df: dataframes) -> int:
         """
-        Abstract method to write a PySpark DataFrame to a destination.
+        Abstract method to write a DataFrame to a destination.
         """
         pass

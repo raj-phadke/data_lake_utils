@@ -23,7 +23,7 @@ local_source_connection_params = LocalConnectionParams(
 
 # Setup target location params
 local_target_connection_params = LocalConnectionParams(
-    connection_type="target", target_file_configs=target_file_configs
+    connection_type="target", file_configs=target_file_configs
 )
 
 # Setup source local connection
@@ -38,14 +38,5 @@ writer = LocalWriter(connection=target_connection)
 df = reader.read()
 print(df)
 
-# New sample row to be added
-new_row = {"id": 11, "name": "Cristiano Jack", "age": 57, "city": "Boston"}
-
-# Adding the new row
-df.loc[len(df)] = new_row  # Adds the new row at the end of the DataFrame
-
-print("\nDf after adding new row\n")
-print(df)
-
-print("\nAttemption to write\n")
+print("\nAttempting to write\n")
 writer.write(df=df)

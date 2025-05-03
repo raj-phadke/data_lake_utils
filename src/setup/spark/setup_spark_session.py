@@ -7,11 +7,15 @@ class SetupSpark:
         app_name="MySparkApp",
         use_iceberg=False,
         iceberg_catalog_name="local_catalog",
+        warehouse_path="file:///tmp/iceberg-warehouse",
+        namespace="default",  # Optional namespace parameter
     ):
         self.app_name = app_name
         self.use_iceberg = use_iceberg
         self.iceberg_catalog_name = iceberg_catalog_name
-        self.spark = None
+        self.warehouse_path = warehouse_path
+        self.namespace = namespace  # Store the namespace
+        self.spark = self.create_session()
 
     def create_session(self):
         builder = (
@@ -22,11 +26,11 @@ class SetupSpark:
         )
 
         if self.use_iceberg:
-            # Iceberg JAR for Spark 3.3 and Scala 2.12
-            iceberg_package = "org.apache.iceberg:iceberg-spark-runtime-3.3_2.12:1.4.2"
-
             builder = (
-                builder.config("spark.jars.packages", iceberg_package)
+                builder.config(
+                    "spark.jars.packages",
+                    "org.apache.iceberg:iceberg-spark-runtime-3.5_2.12:1.9.0",
+                )
                 .config(
                     f"spark.sql.catalog.{self.iceberg_catalog_name}",
                     "org.apache.iceberg.spark.SparkCatalog",
@@ -34,11 +38,15 @@ class SetupSpark:
                 .config(f"spark.sql.catalog.{self.iceberg_catalog_name}.type", "hadoop")
                 .config(
                     f"spark.sql.catalog.{self.iceberg_catalog_name}.warehouse",
-                    "file:///tmp/iceberg-warehouse",
+                    self.warehouse_path,
                 )
                 .config(
                     "spark.sql.extensions",
                     "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions",
+                )
+                .config(
+                    f"spark.sql.catalog.{self.iceberg_catalog_name}.namespace",
+                    self.namespace,  # Add the namespace if needed
                 )
             )
 
