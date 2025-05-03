@@ -12,15 +12,15 @@ class LocalWriter(BaseWriter):
         """
         Write the PySpark DataFrame to a local file system.
         """
-        if self.connection.params.file_type == "csv":
+        if self.connection.params.file_configs.file_type == "csv":
             df.to_csv(
-                self.connection.params.file_path
-                + f"/{self.connection.params.file_name}",
+                self.connection.params.file_configs.file_path
+                + f"/{self.connection.params.file_configs.file_name}",
                 index=False,
             )
         else:
             raise ValueError(
-                f"Unsupported file type: {self.connection.params.file_type}"
+                f"Unsupported file type: {self.connection.params.file_configs.file_type}"
             )
 
         return df.shape[0]

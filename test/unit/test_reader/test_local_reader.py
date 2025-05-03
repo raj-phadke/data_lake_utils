@@ -4,6 +4,7 @@ from unittest.mock import patch
 from src.reader.local_reader import LocalReader
 from src.connection.local_connection import LocalConnection
 from src.configs.connection_configs import LocalConnectionParams
+from src.configs.file_configs import FileConfigs
 
 
 @patch("pandas.read_csv")
@@ -28,11 +29,15 @@ def test_read_valid_csv(mock_read_csv, valid_connection):
 @patch("pandas.read_csv")
 def test_read_invalid_file_type(mock_read_csv):
     # Create a mock for an invalid file type (e.g., .txt)
-    invalid_connection_params = LocalConnectionParams(
-        connection_type="source",
+
+    file_configs = FileConfigs(
         file_path="/mock/path",
         file_name="mock_file.txt",
         file_type="txt",
+    )
+
+    invalid_connection_params = LocalConnectionParams(
+        connection_type="source", file_configs=file_configs
     )
     invalid_connection = LocalConnection(invalid_connection_params)
 

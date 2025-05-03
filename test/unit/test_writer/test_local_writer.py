@@ -4,6 +4,7 @@ from unittest.mock import patch
 from src.writer.local_writer import LocalWriter
 from src.connection.local_connection import LocalConnection
 from src.configs.connection_configs import LocalConnectionParams
+from src.configs.file_configs import FileConfigs
 
 
 @patch("pandas.DataFrame.to_csv")
@@ -31,12 +32,15 @@ def test_write_valid_csv(mock_to_csv, valid_connection):
 
 @patch("pandas.DataFrame.to_csv")
 def test_write_invalid_file_type(mock_to_csv, valid_connection):
-    # Create mock parameters for an invalid file type (e.g., .txt)
-    invalid_connection_params = LocalConnectionParams(
-        connection_type="target",
+    file_configs = FileConfigs(
         file_path="/mock/path",
         file_name="mock_file.txt",
         file_type="txt",
+    )
+
+    # Create mock parameters for an invalid file type (e.g., .txt)
+    invalid_connection_params = LocalConnectionParams(
+        connection_type="target", file_configs=file_configs
     )
     invalid_connection = LocalConnection(invalid_connection_params)
 

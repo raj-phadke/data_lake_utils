@@ -11,12 +11,12 @@ class LocalReader(BaseReader):
         """
         Read data from the local file system and return a PySpark DataFrame.
         """
-        if self.connection.params.file_type == "csv":
+        if self.connection.params.file_configs.file_type == "csv":
             return pd.read_csv(
-                self.connection.params.file_path
-                + f"/{self.connection.params.file_name}"
+                self.connection.params.file_configs.file_path
+                + f"/{self.connection.params.file_configs.file_name}"
             )
         else:
             raise ValueError(
-                f"Unsupported file type: {self.connection.params.file_type}"
+                f"Unsupported file type: {self.connection.params.file_configs.file_type}"
             )

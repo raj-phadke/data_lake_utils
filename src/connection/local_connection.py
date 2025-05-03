@@ -17,7 +17,9 @@ class LocalConnection(BaseConnection):
         Connect to local file system (Mac/Windows)
         Here you can validate the file path exists and can be read.
         """
-        if not os.path.exists(self.params.file_path):
-            raise FileNotFoundError(f"File at {self.params.file_path} not found.")
-        print(f"Connected to local file: {self.params.file_path}")
+        if not os.path.exists(self.params.file_configs.file_path):
+            raise FileNotFoundError(
+                f"File at {self.params.file_configs.file_path} not found."
+            )
+        print(f"Connected to local file: {self.params.file_configs.file_path}")
         return self

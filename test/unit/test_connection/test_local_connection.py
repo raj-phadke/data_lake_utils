@@ -16,7 +16,7 @@ def test_connect_valid_file(mock_exists, valid_connection_params):
         pytest.fail("FileNotFoundError raised unexpectedly!")
 
     # Assert that os.path.exists was called with the correct file path
-    mock_exists.assert_called_once_with(valid_connection_params.file_path)
+    mock_exists.assert_called_once_with(valid_connection_params.file_configs.file_path)
 
 
 @patch("os.path.exists")
@@ -30,4 +30,6 @@ def test_connect_invalid_file(mock_exists, invalid_connection_params):
         connection.connect()
 
     # Assert that os.path.exists was called with the correct file path
-    mock_exists.assert_called_once_with(invalid_connection_params.file_path)
+    mock_exists.assert_called_once_with(
+        invalid_connection_params.file_configs.file_path
+    )

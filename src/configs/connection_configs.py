@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import Literal
+from src.configs.file_configs import FileConfigs
 
 
 class LocalConnectionParams(BaseModel):
@@ -8,6 +9,4 @@ class LocalConnectionParams(BaseModel):
     """
 
     connection_type: Literal["source", "target"]
-    file_path: str
-    file_name: str
-    file_type: str = "csv"  # Defaults to CSV, but can be extended to support other types like parquet, json, etc.
+    file_configs: FileConfigs
